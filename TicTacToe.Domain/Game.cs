@@ -48,6 +48,12 @@ public class Game
             return Status.Won;
         }
 
+        if (_alreadyPlayedFields.Sum(l => l.Value.Count) == 9)
+        {
+            MessageViewer.Display("Game ended on a Draw.");
+            return Status.Draw;
+        }
+
         SwitchPlayer();
 
         return Status.OnGoing;
