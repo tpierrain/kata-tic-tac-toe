@@ -4,6 +4,10 @@ public class Game
 {
     private readonly Dictionary<int, Player> _alreadyPlayedFields = new();
     private bool _started;
+    
+    private readonly HashSet<int> _alreadyPlayedFieldsByX = new();
+    private readonly HashSet<int> _alreadyPlayedFieldsByO = new();
+
     public IDisplayMessages MessageViewer { get; }
     public Player CurrentPlayer { get; private set; }
     
@@ -37,9 +41,27 @@ public class Game
 
         MarkFieldAsAlreadyPlayed(fieldNumber, CurrentPlayer);
 
+        if (HasWon(CurrentPlayer))
+        {
+            MessageViewer.Display($"Player {Enum.GetName(CurrentPlayer)} has won the game.");
+            return Status.Won;
+        }
+
         SwitchPlayer();
 
         return Status.OnGoing;
+    }
+
+    private bool HasWon(Player player)
+    {
+        if (_alreadyPlayedFieldsByX.Contains(1) 
+            && _alreadyPlayedFieldsByX.Contains(4) &&
+            _alreadyPlayedFieldsByX.Contains(7))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private static bool IsInvalidFieldNumber(int fieldNumber)
@@ -50,6 +72,16 @@ public class Game
     private void MarkFieldAsAlreadyPlayed(int fieldNumber, Player player)
     {
         _alreadyPlayedFields[fieldNumber] = player;
+
+        if (player == Player.X)
+        {
+            _alreadyPlayedFieldsByX.Add(fieldNumber);
+        }
+        else
+        {
+            _alreadyPlayedFieldsByO.Add(fieldNumber);
+        }
+
         MessageViewer.Display($"{Enum.GetName(CurrentPlayer)} played #{fieldNumber}");
     }
 
