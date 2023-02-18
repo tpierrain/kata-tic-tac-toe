@@ -190,5 +190,28 @@ namespace TicTacToe.Tests
             Check.ThatEnum(status).IsEqualTo(Status.Won);
             messageViewer.Received(1).Display($"Player X has won the game.");
         }
+
+        [TestCase(new int[] { 1, 2, 3 }, new int[] { 4, 8, 6 })]
+        [TestCase(new int[] { 4, 5, 6 }, new int[] { 1, 3, 8 })]
+        [TestCase(new int[] { 7, 8, 9 }, new int[] { 1, 5, 3 })]
+        public void Have_Player_O_won_when_is_taking_all_fields_in_a_Row(int[] winner, int[] looser)
+        {
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var game = new Game(messageViewer).Start();
+
+            var playerXValues = new Queue<int>(looser);
+            var playerOValues = new Queue<int>(winner);
+
+            var status = game.Play(playerXValues.Dequeue());
+            status = game.Play(playerOValues.Dequeue());
+            status = game.Play(playerXValues.Dequeue());
+            status = game.Play(playerOValues.Dequeue());
+            status = game.Play(playerXValues.Dequeue());
+            Check.ThatEnum(status).IsNotEqualTo(Status.Won);
+
+            status = game.Play(playerOValues.Dequeue());
+            Check.ThatEnum(status).IsEqualTo(Status.Won);
+            messageViewer.Received(1).Display("Player O has won the game.");
+        }
     }
 }
