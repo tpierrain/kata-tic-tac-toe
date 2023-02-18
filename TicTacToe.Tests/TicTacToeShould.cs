@@ -54,7 +54,7 @@ namespace TicTacToe.Tests
 
         public Status Play(Player player, int cellNumber)
         {
-            throw new NotImplementedException();
+            return Status.OnGoing;
         }
     }
 }
