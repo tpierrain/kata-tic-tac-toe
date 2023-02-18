@@ -15,7 +15,23 @@ public class Game
     public Player CurrentPlayer { get; private set; }
 
     public GameStatus Status { get; private set; }
-    public string[] Board => new[] { "1", "2" };
+    public string[] Board => ExportBoard();
+
+    private string[] ExportBoard()
+    {
+        return Enumerable.Range(1, MaxNumberOfElements).Select(x =>
+        {
+            if (_alreadyPlayedFields[Player.X].Contains(x))
+            {
+                return "X";
+            }
+            else if (_alreadyPlayedFields[Player.O].Contains(x))
+            {
+                return "O";
+            }
+            return x.ToString();
+        }).ToArray();
+    }
 
     public Game(IDisplayMessages messageViewer)
     {
