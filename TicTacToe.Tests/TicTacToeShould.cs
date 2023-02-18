@@ -140,5 +140,24 @@ namespace TicTacToe.Tests
             Check.ThatEnum(status).IsEqualTo(Status.Won);
             messageViewer.Received(1).Display("Player X has won the game.");
         }
+
+        [Test]
+        public void End_a_game_when_all_fields_in_the_first_column_are_taken_by_player_0()
+        {
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var game = new Game(messageViewer).Start();
+
+            // 0 will take: 1, 4, 7
+
+            var status = game.Play(2);
+            status = game.Play(1);
+            status = game.Play(3);
+            status = game.Play(4);
+            status = game.Play(9);
+            status = game.Play(7);
+
+            Check.ThatEnum(status).IsEqualTo(Status.Won);
+            messageViewer.Received(1).Display("Player O has won the game.");
+        }
     }
 }
