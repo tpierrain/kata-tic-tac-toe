@@ -44,7 +44,7 @@ namespace TicTacToe.Tests
         }
 
         [Test]
-        public void Accept_X_First_Answer()
+        public void Accept_X_first_answer()
         {
             var messageViewer = Substitute.For<IDisplayMessages>();
             var game = new Game(messageViewer).Start();
@@ -54,7 +54,7 @@ namespace TicTacToe.Tests
         }
 
         [Test]
-        public void Display_X_First_Answer()
+        public void Display_X_first_answer()
         {
             var messageViewer = Substitute.For<IDisplayMessages>();
             var game = new Game(messageViewer).Start();
@@ -77,7 +77,7 @@ namespace TicTacToe.Tests
         }
 
         [Test]
-        public void Display_O_First_Answer()
+        public void Display_O_first_answer()
         {
             var messageViewer = Substitute.For<IDisplayMessages>();
             var game = new Game(messageViewer).Start();
