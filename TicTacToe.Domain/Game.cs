@@ -22,6 +22,11 @@ public class Game
             return Status.NotStarted;
         }
 
+        if(cellNumber is < 1 or > 9)
+        {
+            return Status.SamePlayerPlayAgain;
+        }
+
         if (AlreadyPlayed(cellNumber))
         {
             MessageViewer.Display($"#{cellNumber} is already played. Try another field.");
