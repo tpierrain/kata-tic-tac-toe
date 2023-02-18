@@ -43,10 +43,10 @@ namespace TicTacToe.Tests
             var messageViewer = Substitute.For<IDisplayMessages>();
             var game = new Game(messageViewer);
 
-            messageViewer.Received(0).Display("Next player: 0");
+            messageViewer.Received(0).Display("Next player: O");
 
             game.Play(5);
-            messageViewer.Received(1).Display("Next player: 0");
+            messageViewer.Received(1).Display("Next player: O");
         }
     }
 }

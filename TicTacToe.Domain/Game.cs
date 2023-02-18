@@ -15,9 +15,24 @@ public class Game
 
     public Status Play(int cellNumber)
     {
-
         MessageViewer.Display($"{Enum.GetName(NextPlayer)} played #{cellNumber}");
 
+        ChangePlayer();
+
+        MessageViewer.Display($"Next player: {Enum.GetName(NextPlayer)}");
+
         return Status.OnGoing;
+    }
+
+    private void ChangePlayer()
+    {
+        if (NextPlayer == Player.O)
+        {
+            NextPlayer = Player.X;
+        }
+        else
+        {
+            NextPlayer = Player.O;
+        }
     }
 }
