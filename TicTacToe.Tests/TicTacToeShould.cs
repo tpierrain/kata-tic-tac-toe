@@ -123,22 +123,22 @@ namespace TicTacToe.Tests
             messageViewer.Received(2).Display("Invalid field number. Please choose a not already played value from 1 to 9");
         }
 
-        //[Test]
-        //public void End_a_game_when_all_fields_in_the_first_column_are_taken_by_player_X()
-        //{
-        //    var messageViewer = Substitute.For<IDisplayMessages>();
-        //    var game = new Game(messageViewer).Start();
+        [Test]
+        public void End_a_game_when_all_fields_in_the_first_column_are_taken_by_player_X()
+        {
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var game = new Game(messageViewer).Start();
 
-        //    // X will take: 1, 4, 7
+            // X will take: 1, 4, 7
 
-        //    var status = game.Play(1);
-        //    status = game.Play(2);
-        //    status = game.Play(4);
-        //    status = game.Play(3);
-        //    status = game.Play(7);
-            
-        //    Check.ThatEnum(status).IsEqualTo(Status.Won);
-        //    messageViewer.Received(1).Display("Player X has won the game.");
-        //}
+            var status = game.Play(1);
+            status = game.Play(2);
+            status = game.Play(4);
+            status = game.Play(3);
+            status = game.Play(7);
+
+            Check.ThatEnum(status).IsEqualTo(Status.Won);
+            messageViewer.Received(1).Display("Player X has won the game.");
+        }
     }
 }
