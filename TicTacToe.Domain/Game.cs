@@ -2,6 +2,11 @@ namespace TicTacToe.Domain;
 
 public class Game
 {
+    private const int NumberOfRows = 3;
+    private const int NumberOfColumns = 3;
+
+    private const int MaxNumberOfElements = NumberOfRows * NumberOfColumns;
+
     private bool _started;
    
     private readonly Dictionary<Player, HashSet<int>> _alreadyPlayedFields = new();
@@ -48,7 +53,7 @@ public class Game
             return Status.Won;
         }
 
-        if (_alreadyPlayedFields.Sum(l => l.Value.Count) == 9)
+        if (SumOfAlreadyPlayedFields() == MaxNumberOfElements)
         {
             MessageViewer.Display("Game ended on a Draw.");
             return Status.Draw;
@@ -57,6 +62,11 @@ public class Game
         SwitchPlayer();
 
         return Status.OnGoing;
+    }
+
+    private int SumOfAlreadyPlayedFields()
+    {
+        return _alreadyPlayedFields.Sum(l => l.Value.Count);
     }
 
     private bool HasWon(Player player)
