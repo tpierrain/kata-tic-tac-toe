@@ -14,6 +14,27 @@ namespace TicTacToe.Tests
             
             instructor.Received(1).Display("X plays first");
         }
+
+        [Test]
+        public void Accept_X_First_Answer()
+        {
+            var instructor = Substitute.For<IDisplayInstructions>();
+            var game = new Game(instructor);
+
+            var status = game.Play(Player.X, 5);
+            Check.ThatEnum(status).IsEqualTo(Status.OnGoing);
+        }
+    }
+
+    public enum Status
+    {
+        OnGoing
+    }
+
+    public enum Player
+    {
+        X,
+        O
     }
 
     public interface IDisplayInstructions
@@ -29,6 +50,11 @@ namespace TicTacToe.Tests
         {
             Instructor = instructor;
             Instructor.Display("X plays first");
+        }
+
+        public Status Play(Player player, int cellNumber)
+        {
+            throw new NotImplementedException();
         }
     }
 }
