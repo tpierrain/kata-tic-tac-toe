@@ -11,7 +11,7 @@ public class BoardDrawerShould
     public void Sketch_an_Empty_board()
     {
         var console = Substitute.For<IWriteThings>();
-        var boardDrawer = new BoardDrawer(console);
+        var boardDrawer = new AsciiBoardDrawer(console);
         var game = new Game(Substitute.For<IDisplayMessages>());
         var emptyBoard = game.Board;
 
@@ -29,7 +29,7 @@ public class BoardDrawerShould
     public void Sketch_a_board_with_X_and_O_moves()
     {
         var console = Substitute.For<IWriteThings>();
-        var boardDrawer = new BoardDrawer(console);
+        var boardDrawer = new AsciiBoardDrawer(console);
         
         var game = new Game(Substitute.For<IDisplayMessages>()).Start();
         game = game.Play(5); // X
