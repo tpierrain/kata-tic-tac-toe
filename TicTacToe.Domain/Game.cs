@@ -65,7 +65,23 @@ public class Game
             return true;
         }
 
+        if (HasTakenADiagonal(player))
+        {
+            return true;
+        }
+
         return false;
+    }
+
+    private bool HasTakenADiagonal(Player player)
+    {
+        return (_alreadyPlayedFields[player].Contains(1)
+               && _alreadyPlayedFields[player].Contains(5)
+               && _alreadyPlayedFields[player].Contains(9))
+               || 
+               (_alreadyPlayedFields[player].Contains(3)
+               && _alreadyPlayedFields[player].Contains(5)
+               && _alreadyPlayedFields[player].Contains(7));
     }
 
     private bool HasTakenTheFirstColumn(Player player)
