@@ -1,7 +1,5 @@
 using NFluent;
 using NSubstitute;
-using NSubstitute.Core;
-using System.Numerics;
 using TicTacToe.Domain;
 
 namespace TicTacToe.Tests

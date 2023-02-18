@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Diverse" Version="0.10.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
     <PackageReference Include="NFluent" Version="2.8.0" />
     <PackageReference Include="NSubstitute" Version="5.0.0" />
@@ -20,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TicTacToe.Console\TicTacToe.Console.csproj" />
     <ProjectReference Include="..\TicTacToe.Domain\TicTacToe.Domain.csproj" />
   </ItemGroup>
 
