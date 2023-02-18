@@ -4,15 +4,15 @@ public class Game
 {
     private readonly Dictionary<int, Player> _alreadyPlayedFields = new();
     public IDisplayMessages MessageViewer { get; }
-    public Player NextPlayer { get; private set; }
+    public Player CurrentPlayer { get; private set; }
 
 
     public Game(IDisplayMessages messageViewer)
     {
-        NextPlayer = Player.X;
+        CurrentPlayer = Player.X;
         
         MessageViewer = messageViewer;
-        MessageViewer.Display($"Next player: {Enum.GetName(NextPlayer)}");
+        MessageViewer.Display($"Next player: {Enum.GetName(CurrentPlayer)}");
     }
 
     public Status Play(int cellNumber)
@@ -24,10 +24,9 @@ public class Game
             return Status.SamePlayerPlayAgain;
         }
 
-        MarkFieldAsAlreadyPlayed(cellNumber, NextPlayer);
-        MessageViewer.Display($"{Enum.GetName(NextPlayer)} played #{cellNumber}");
+        MarkFieldAsAlreadyPlayed(cellNumber, CurrentPlayer);
 
-        ChangePlayer();
+        SwitchPlayer();
 
         return Status.OnGoing;
     }
@@ -35,6 +34,7 @@ public class Game
     private void MarkFieldAsAlreadyPlayed(int cellNumber, Player player)
     {
         _alreadyPlayedFields[cellNumber] = player;
+        MessageViewer.Display($"{Enum.GetName(CurrentPlayer)} played #{cellNumber}");
     }
 
     private bool AlreadyPlayed(int cellNumber)
@@ -42,9 +42,9 @@ public class Game
         return _alreadyPlayedFields.ContainsKey(cellNumber);
     }
 
-    private void ChangePlayer()
+    private void SwitchPlayer()
     {
-        NextPlayer = NextPlayer == Player.O ? Player.X : Player.O;
-        MessageViewer.Display($"Next player: {Enum.GetName(NextPlayer)}");
+        CurrentPlayer = CurrentPlayer == Player.O ? Player.X : Player.O;
+        MessageViewer.Display($"Next player: {Enum.GetName(CurrentPlayer)}");
     }
 }
