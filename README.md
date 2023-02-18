@@ -11,7 +11,8 @@
 - a game is over when all fields in a diagonal are taken by a player
 - a game is over (draw) when all fields are taken
 
-Empty grid:
+
+## Empty grid:
 
     +---+---+---+
     | 1 | 2 | 3 |
@@ -19,6 +20,17 @@ Empty grid:
     | 4 | 5 | 6 |
     +---+---+---+
     | 7 | 8 | 9 |
+    +---+---+---+
+
+
+    ## X won
+
+    +---+---+---+
+    | 0 | 2 | X |
+    +---+---+---+
+    | 4 | X | X |
+    +---+---+---+
+    | 0 | 0 | X |
     +---+---+---+
 
 
