@@ -28,6 +28,7 @@ namespace TicTacToe.Tests
         public Game(IDisplayInstructions instructor)
         {
             Instructor = instructor;
+            Instructor.Display("X plays first");
         }
     }
 }
