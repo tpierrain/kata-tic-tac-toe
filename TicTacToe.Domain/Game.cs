@@ -2,7 +2,6 @@ namespace TicTacToe.Domain;
 
 public class Game
 {
-    private readonly Dictionary<int, Player> _alreadyPlayedFields = new();
     private bool _started;
     
     private readonly HashSet<int> _alreadyPlayedFieldsByX = new();
@@ -71,8 +70,6 @@ public class Game
 
     private void MarkFieldAsAlreadyPlayed(int fieldNumber, Player player)
     {
-        _alreadyPlayedFields[fieldNumber] = player;
-
         if (player == Player.X)
         {
             _alreadyPlayedFieldsByX.Add(fieldNumber);
@@ -87,7 +84,7 @@ public class Game
 
     private bool IsAlreadyPlayed(int fieldNumber)
     {
-        return _alreadyPlayedFields.ContainsKey(fieldNumber);
+        return _alreadyPlayedFieldsByX.Contains(fieldNumber) || _alreadyPlayedFieldsByO.Contains(fieldNumber);
     }
 
     private void SwitchPlayer()
