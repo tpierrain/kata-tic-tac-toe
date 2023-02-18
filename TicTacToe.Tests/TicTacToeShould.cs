@@ -22,7 +22,7 @@ namespace TicTacToe.Tests
             var messageViewer = Substitute.For<IDisplayMessages>();
             var game = new Game(messageViewer);
 
-            var status = game.Play(Player.X, 5);
+            var status = game.Play(5);
             Check.ThatEnum(status).IsEqualTo(Status.OnGoing);
         }
 
@@ -32,7 +32,7 @@ namespace TicTacToe.Tests
             var messageViewer = Substitute.For<IDisplayMessages>();
             var game = new Game(messageViewer);
 
-            game.Play(Player.X, 5);
+            game.Play(5);
             
             messageViewer.Received(1).Display("X played #5");
         }
