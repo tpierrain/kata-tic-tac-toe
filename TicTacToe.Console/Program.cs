@@ -6,6 +6,8 @@ using TicTacToe.Domain;
 var game = new Game(new ConsoleMessageViewer()).Start();
 var boardDrawer = new AsciiBoardDrawer();
 
+boardDrawer.Draw(game.Board);
+
 while (game.Status != GameStatus.Won && game.Status != GameStatus.Draw) 
 {
     var input = Console.ReadLine();
