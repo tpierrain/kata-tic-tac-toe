@@ -3,10 +3,10 @@ namespace TicTacToe.Domain;
 public class Game
 {
     private readonly Dictionary<int, Player> _alreadyPlayedFields = new();
+    private bool _started;
     public IDisplayMessages MessageViewer { get; }
     public Player CurrentPlayer { get; private set; }
-
-
+    
     public Game(IDisplayMessages messageViewer)
     {
         CurrentPlayer = Player.X;
@@ -17,6 +17,12 @@ public class Game
 
     public Status Play(int cellNumber)
     {
+        if (!_started)
+        {
+            MessageViewer.Display("Game not started.");
+            return Status.NotStarted;
+        }
+
         if (AlreadyPlayed(cellNumber))
         {
             MessageViewer.Display($"#{cellNumber} is already played. Try another field.");
@@ -46,5 +52,12 @@ public class Game
     {
         CurrentPlayer = CurrentPlayer == Player.O ? Player.X : Player.O;
         MessageViewer.Display($"Next player: {Enum.GetName(CurrentPlayer)}");
+    }
+
+    public Game Start()
+    {
+        _started = true;
+
+        return this;
     }
 }

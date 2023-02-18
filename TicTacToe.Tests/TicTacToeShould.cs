@@ -24,7 +24,7 @@ namespace TicTacToe.Tests
         public void Ask_X_to_start()
         {
             var messageViewer = Substitute.For<IDisplayMessages>();
-            var game = new Game(messageViewer);
+            var game = new Game(messageViewer).Start();
             
             messageViewer.Received(1).Display("Next player: X");
         }
@@ -33,7 +33,7 @@ namespace TicTacToe.Tests
         public void Accept_X_First_Answer()
         {
             var messageViewer = Substitute.For<IDisplayMessages>();
-            var game = new Game(messageViewer);
+            var game = new Game(messageViewer).Start();
 
             var status = game.Play(5);
             Check.ThatEnum(status).IsEqualTo(Status.OnGoing);
@@ -43,7 +43,7 @@ namespace TicTacToe.Tests
         public void Display_X_First_Answer()
         {
             var messageViewer = Substitute.For<IDisplayMessages>();
-            var game = new Game(messageViewer);
+            var game = new Game(messageViewer).Start();
 
             game.Play(5);
             
@@ -54,7 +54,7 @@ namespace TicTacToe.Tests
         public void Ask_O_to_play_after_X()
         {
             var messageViewer = Substitute.For<IDisplayMessages>();
-            var game = new Game(messageViewer);
+            var game = new Game(messageViewer).Start();
 
             messageViewer.Received(0).Display("Next player: O");
 
@@ -66,7 +66,7 @@ namespace TicTacToe.Tests
         public void Display_O_First_Answer()
         {
             var messageViewer = Substitute.For<IDisplayMessages>();
-            var game = new Game(messageViewer);
+            var game = new Game(messageViewer).Start();
 
             game.Play(5);
             messageViewer.Received(1).Display("X played #5");
@@ -79,7 +79,7 @@ namespace TicTacToe.Tests
         public void Tell_the_player_to_try_another_field_if_the_chosen_one_is_already_played()
         {
             var messageViewer = Substitute.For<IDisplayMessages>();
-            var game = new Game(messageViewer);
+            var game = new Game(messageViewer).Start();
 
             game.Play(5);
             var status = game.Play(5);

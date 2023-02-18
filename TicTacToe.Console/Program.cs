@@ -9,6 +9,6 @@ var input = Console.ReadLine();
 
 var tryParse = int.TryParse(input, out int fieldName);
 
-game.Play(fieldName);
+var status = game.Play(fieldName);
 
 Console.WriteLine("ciao !");
