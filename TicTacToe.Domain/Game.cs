@@ -60,6 +60,13 @@ public class Game
             return true;
         }
 
+        if (_alreadyPlayedFieldsByO.Contains(1)
+            && _alreadyPlayedFieldsByO.Contains(4) &&
+            _alreadyPlayedFieldsByO.Contains(7))
+        {
+            return true;
+        }
+
         return false;
     }
 
