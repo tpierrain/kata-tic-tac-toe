@@ -13,7 +13,7 @@ namespace TicTacToe.Tests
             var messageViewer = Substitute.For<IDisplayMessages>();
             var game = new Game(messageViewer);
             
-            messageViewer.Received(1).Display("X plays first");
+            messageViewer.Received(1).Display("Next player: X");
         }
 
         [Test]
