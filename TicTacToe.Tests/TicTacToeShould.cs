@@ -123,24 +123,25 @@ namespace TicTacToe.Tests
             messageViewer.Received(2).Display("Invalid field number. Please choose a not already played value from 1 to 9");
         }
 
-        [Test]
-        public void End_a_game_when_all_fields_in_the_first_column_are_taken_by_player_X()
+        [TestCase(new int[] { 1, 4, 7 }, new int[] { 2, 3, 9 })]
+        [TestCase(new int[] { 2, 5, 8 }, new int[] { 1, 4, 9 })]
+        public void Have_Player_X_won_when_is_taking_all_fields_in_a_column(int[] winner, int[] looser)
         {
             var messageViewer = Substitute.For<IDisplayMessages>();
             var game = new Game(messageViewer).Start();
-            
-            var winnerValues = new Queue<int>(new [] {1, 4, 7 });
-            var looserValues = new Queue<int>(new [] {2, 3, 9 });
 
-            var status = game.Play(winnerValues.Dequeue());
-            status = game.Play(looserValues.Dequeue());
-            status = game.Play(winnerValues.Dequeue());
-            status = game.Play(looserValues.Dequeue());
+            var playerXValues = new Queue<int>(winner);
+            var playerOValues = new Queue<int>(looser);
+
+            var status = game.Play(playerXValues.Dequeue());
+            status = game.Play(playerOValues.Dequeue());
+            status = game.Play(playerXValues.Dequeue());
+            status = game.Play(playerOValues.Dequeue());
             Check.ThatEnum(status).IsNotEqualTo(Status.Won);
 
-            status = game.Play(winnerValues.Dequeue());
+            status = game.Play(playerXValues.Dequeue());
             Check.ThatEnum(status).IsEqualTo(Status.Won);
-            messageViewer.Received(1).Display("Player X has won the game.");
+            messageViewer.Received(1).Display($"Player X has won the game.");
         }
 
         [Test]
