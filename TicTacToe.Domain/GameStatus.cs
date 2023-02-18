@@ -1,6 +1,6 @@
 namespace TicTacToe.Domain;
 
-public enum Status
+public enum GameStatus
 {
     OnGoing,
     SamePlayerPlayAgain,

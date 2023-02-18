@@ -5,15 +5,13 @@ using TicTacToe.Domain;
 
 var game = new Game(new ConsoleMessageViewer()).Start();
 
-var status = GameStatus.OnGoing;
-
-while (status != GameStatus.Won && status != GameStatus.Draw) 
+while (game.Status != GameStatus.Won && game.Status != GameStatus.Draw) 
 {
     var input = Console.ReadLine();
 
     var tryParse = int.TryParse(input, out int fieldNumber);
 
-    status = game.Play(fieldNumber);
+    game = game.Play(fieldNumber);
 }
 
 

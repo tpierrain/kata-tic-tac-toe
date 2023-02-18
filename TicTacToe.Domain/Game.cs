@@ -18,6 +18,7 @@ public class Game
 
     public Game(IDisplayMessages messageViewer)
     {
+        Status = GameStatus.OnGoing;
         _alreadyPlayedFields[Player.X] = new HashSet<int>();
         _alreadyPlayedFields[Player.O] = new HashSet<int>();
 
@@ -26,27 +27,27 @@ public class Game
         MessageViewer = messageViewer;
     }
 
-    public GameStatus Play(int fieldNumber)
+    public Game Play(int fieldNumber)
     {
         if (!_started)
         {
             MessageViewer.Display("Game not started.");
             Status = GameStatus.NotStarted;
-            return GameStatus.NotStarted;
+            return this;
         }
 
         if(IsInvalidFieldNumber(fieldNumber))
         {
             MessageViewer.Display("Invalid field number. Please choose a not already played value from 1 to 9");
             Status = GameStatus.SamePlayerPlayAgain;
-            return GameStatus.SamePlayerPlayAgain;
+            return this;
         }
 
         if (IsAlreadyPlayed(fieldNumber))
         {
             MessageViewer.Display($"#{fieldNumber} is already played. Try another field.");
             Status = GameStatus.SamePlayerPlayAgain;
-            return GameStatus.SamePlayerPlayAgain;
+            return this;
         }
 
         MarkFieldAsAlreadyPlayed(fieldNumber, CurrentPlayer);
@@ -55,20 +56,20 @@ public class Game
         {
             MessageViewer.Display($"Player {Enum.GetName(CurrentPlayer)} has won the game.");
             Status = GameStatus.Won;
-            return GameStatus.Won;
+            return this;
         }
 
         if (SumOfAlreadyPlayedFields() == MaxNumberOfElements)
         {
             MessageViewer.Display("Game ended on a Draw.");
             Status = GameStatus.Draw;
-            return GameStatus.Draw;
+            return this;
         }
 
         SwitchPlayer();
 
         Status = GameStatus.OnGoing;
-        return GameStatus.OnGoing;
+        return this;
     }
 
     private int SumOfAlreadyPlayedFields()
