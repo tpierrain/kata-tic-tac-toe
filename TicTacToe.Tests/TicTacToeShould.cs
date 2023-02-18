@@ -1,5 +1,6 @@
 using NFluent;
 using NSubstitute;
+using TicTacToe.Domain;
 
 namespace TicTacToe.Tests
 {
@@ -34,40 +35,6 @@ namespace TicTacToe.Tests
             game.Play(Player.X, 5);
             
             messageViewer.Received(1).Display("X played #5");
-        }
-    }
-
-    public enum Status
-    {
-        OnGoing
-    }
-
-    public enum Player
-    {
-        X,
-        O
-    }
-
-    public interface IDisplayMessages
-    {
-        void Display(string instruction);
-    }
-
-    public class Game
-    {
-        public IDisplayMessages MessageViewer { get; }
-
-        public Game(IDisplayMessages messageViewer)
-        {
-            MessageViewer = messageViewer;
-            MessageViewer.Display("X plays first");
-        }
-
-        public Status Play(Player player, int cellNumber)
-        {
-            MessageViewer.Display($"{Enum.GetName(player)} played #{cellNumber}");
-
-            return Status.OnGoing;
         }
     }
 }
