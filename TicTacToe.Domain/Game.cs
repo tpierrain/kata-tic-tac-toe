@@ -55,7 +55,7 @@ public class Game
 
     private bool HasWon(Player player)
     {
-        if (HasTakenTheFirstColumn(player))
+        if (HasTakenTheFirstColumn(player) || HasTakenTheSecondColumn(player))
         {
             return true;
         }
@@ -68,6 +68,13 @@ public class Game
         return _alreadyPlayedFields[player].Contains(1) 
                && _alreadyPlayedFields[player].Contains(4) 
                && _alreadyPlayedFields[player].Contains(7);
+    }
+
+    private bool HasTakenTheSecondColumn(Player player)
+    {
+        return _alreadyPlayedFields[player].Contains(2)
+               && _alreadyPlayedFields[player].Contains(5)
+               && _alreadyPlayedFields[player].Contains(8);
     }
 
     private static bool IsInvalidFieldNumber(int fieldNumber)
