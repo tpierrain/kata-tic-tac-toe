@@ -135,6 +135,8 @@ namespace TicTacToe.Tests
             status = game.Play(2);
             status = game.Play(4);
             status = game.Play(3);
+            Check.ThatEnum(status).IsNotEqualTo(Status.Won);
+
             status = game.Play(7);
 
             Check.ThatEnum(status).IsEqualTo(Status.Won);
@@ -154,6 +156,8 @@ namespace TicTacToe.Tests
             status = game.Play(3);
             status = game.Play(4);
             status = game.Play(9);
+            Check.ThatEnum(status).IsNotEqualTo(Status.Won);
+
             status = game.Play(7);
 
             Check.ThatEnum(status).IsEqualTo(Status.Won);
