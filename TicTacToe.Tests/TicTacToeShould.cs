@@ -125,6 +125,7 @@ namespace TicTacToe.Tests
 
         [TestCase(new int[] { 1, 4, 7 }, new int[] { 2, 3, 9 })]
         [TestCase(new int[] { 2, 5, 8 }, new int[] { 1, 4, 9 })]
+        [TestCase(new int[] { 3, 6, 9 }, new int[] { 1, 4, 8 })]
         public void Have_Player_X_won_when_is_taking_all_fields_in_a_column(int[] winner, int[] looser)
         {
             var messageViewer = Substitute.For<IDisplayMessages>();
