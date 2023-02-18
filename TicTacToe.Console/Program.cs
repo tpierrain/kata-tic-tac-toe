@@ -5,10 +5,16 @@ using TicTacToe.Domain;
 
 var game = new Game(new ConsoleMessageViewer()).Start();
 
-var input = Console.ReadLine();
+var status = Status.OnGoing;
 
-var tryParse = int.TryParse(input, out int fieldName);
+while (status != Status.Won || status != Status.Draw) 
+{
+    var input = Console.ReadLine();
 
-var status = game.Play(fieldName);
+    var tryParse = int.TryParse(input, out int fieldName);
+
+    status = game.Play(fieldName);
+}
+
 
 Console.WriteLine("ciao !");

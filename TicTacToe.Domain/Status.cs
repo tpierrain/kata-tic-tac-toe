@@ -4,5 +4,7 @@ public enum Status
 {
     OnGoing,
     SamePlayerPlayAgain,
-    NotStarted
+    NotStarted,
+    Draw,
+    Won
 }

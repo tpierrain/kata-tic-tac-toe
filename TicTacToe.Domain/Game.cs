@@ -58,6 +58,7 @@ public class Game
         _started = true;
         MessageViewer.Display("New Tic tac toe game started.");
         MessageViewer.Display($"Next player: {Enum.GetName(CurrentPlayer)}");
+
         return this;
     }
 }
