@@ -12,7 +12,6 @@ public class Game
         CurrentPlayer = Player.X;
         
         MessageViewer = messageViewer;
-        MessageViewer.Display($"Next player: {Enum.GetName(CurrentPlayer)}");
     }
 
     public Status Play(int cellNumber)
@@ -57,7 +56,8 @@ public class Game
     public Game Start()
     {
         _started = true;
-
+        MessageViewer.Display("New Tic tac toe game started.");
+        MessageViewer.Display($"Next player: {Enum.GetName(CurrentPlayer)}");
         return this;
     }
 }
