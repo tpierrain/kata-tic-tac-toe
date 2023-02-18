@@ -9,6 +9,18 @@ namespace TicTacToe.Tests
     public class TicTacToeShould
     {
         [Test]
+        public void Be_started_before_we_play()
+        {
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var game = new Game(messageViewer);
+
+            var status = game.Play(1);
+
+            Check.ThatEnum(status).IsEqualTo(Status.NotStarted);
+            messageViewer.Received(1).Display("Game not started.");
+        }
+
+        [Test]
         public void Ask_X_to_start()
         {
             var messageViewer = Substitute.For<IDisplayMessages>();
