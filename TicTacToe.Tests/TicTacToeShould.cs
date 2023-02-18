@@ -9,17 +9,17 @@ namespace TicTacToe.Tests
         [Test]
         public void Ask_X_to_start()
         {
-            var instructor = Substitute.For<IDisplayInstructions>();
-            var game = new Game(instructor);
+            var displayDevice = Substitute.For<IDisplayMessages>();
+            var game = new Game(displayDevice);
             
-            instructor.Received(1).Display("X plays first");
+            displayDevice.Received(1).Display("X plays first");
         }
 
         [Test]
         public void Accept_X_First_Answer()
         {
-            var instructor = Substitute.For<IDisplayInstructions>();
-            var game = new Game(instructor);
+            var displayDevice = Substitute.For<IDisplayMessages>();
+            var game = new Game(displayDevice);
 
             var status = game.Play(Player.X, 5);
             Check.ThatEnum(status).IsEqualTo(Status.OnGoing);
@@ -28,12 +28,12 @@ namespace TicTacToe.Tests
         [Test]
         public void Display_X_First_Answer()
         {
-            var instructor = Substitute.For<IDisplayInstructions>();
-            var game = new Game(instructor);
+            var displayDevice = Substitute.For<IDisplayMessages>();
+            var game = new Game(displayDevice);
 
-            var status = game.Play(Player.X, 5);
+            game.Play(Player.X, 5);
             
-            instructor.Received(1).Display("X played #5");
+            displayDevice.Received(1).Display("X played #5");
         }
     }
 
@@ -48,24 +48,24 @@ namespace TicTacToe.Tests
         O
     }
 
-    public interface IDisplayInstructions
+    public interface IDisplayMessages
     {
         void Display(string instruction);
     }
 
     public class Game
     {
-        public IDisplayInstructions Instructor { get; }
+        public IDisplayMessages DisplayDevice { get; }
 
-        public Game(IDisplayInstructions instructor)
+        public Game(IDisplayMessages displayDevice)
         {
-            Instructor = instructor;
-            Instructor.Display("X plays first");
+            DisplayDevice = displayDevice;
+            DisplayDevice.Display("X plays first");
         }
 
         public Status Play(Player player, int cellNumber)
         {
-            Instructor.Display($"{Enum.GetName(player)} played #{cellNumber}");
+            DisplayDevice.Display($"{Enum.GetName(player)} played #{cellNumber}");
 
             return Status.OnGoing;
         }
