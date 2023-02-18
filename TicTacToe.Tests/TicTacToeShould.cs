@@ -101,5 +101,21 @@ namespace TicTacToe.Tests
             Check.ThatEnum(status).IsEqualTo(Status.SamePlayerPlayAgain);
             messageViewer.Received(1).Display("#5 is already played. Try another field.");
         }
+
+        [Test]
+        public void Only_play_with_valid_field_numbers()
+        {
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var game = new Game(messageViewer).Start();
+
+            Check.ThatEnum(game.Play(cellNumber: 0)).IsEqualTo(Status.SamePlayerPlayAgain);
+
+            for (var i = 1; i <= 9; i++)
+            {
+                Check.ThatEnum(game.Play(cellNumber: i)).IsNotEqualTo(Status.SamePlayerPlayAgain);
+            }
+
+            Check.ThatEnum(game.Play(cellNumber: 10)).IsEqualTo(Status.SamePlayerPlayAgain);
+        }
     }
 }
