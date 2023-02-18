@@ -60,6 +60,11 @@ public class Game
             return true;
         }
 
+        if (HasTakenTheFirstRow(player) || HasTakenTheSecondRow(player) || HasTakenTheThirdRow(player))
+        {
+            return true;
+        }
+
         return false;
     }
 
@@ -81,6 +86,27 @@ public class Game
     {
         return _alreadyPlayedFields[player].Contains(3)
                && _alreadyPlayedFields[player].Contains(6)
+               && _alreadyPlayedFields[player].Contains(9);
+    }
+
+    private bool HasTakenTheFirstRow(Player player)
+    {
+        return _alreadyPlayedFields[player].Contains(1)
+               && _alreadyPlayedFields[player].Contains(2)
+               && _alreadyPlayedFields[player].Contains(3);
+    }
+
+    private bool HasTakenTheSecondRow(Player player)
+    {
+        return _alreadyPlayedFields[player].Contains(4)
+               && _alreadyPlayedFields[player].Contains(5)
+               && _alreadyPlayedFields[player].Contains(6);
+    }
+
+    private bool HasTakenTheThirdRow(Player player)
+    {
+        return _alreadyPlayedFields[player].Contains(7)
+               && _alreadyPlayedFields[player].Contains(8)
                && _alreadyPlayedFields[player].Contains(9);
     }
 
