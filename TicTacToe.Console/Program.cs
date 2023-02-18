@@ -7,13 +7,13 @@ var game = new Game(new ConsoleMessageViewer()).Start();
 
 var status = Status.OnGoing;
 
-while (status != Status.Won || status != Status.Draw) 
+while (status != Status.Won && status != Status.Draw) 
 {
     var input = Console.ReadLine();
 
-    var tryParse = int.TryParse(input, out int fieldName);
+    var tryParse = int.TryParse(input, out int fieldNumber);
 
-    status = game.Play(fieldName);
+    status = game.Play(fieldNumber);
 }
 
 
