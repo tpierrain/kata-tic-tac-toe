@@ -9,17 +9,17 @@ namespace TicTacToe.Tests
         [Test]
         public void Ask_X_to_start()
         {
-            var displayDevice = Substitute.For<IDisplayMessages>();
-            var game = new Game(displayDevice);
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var game = new Game(messageViewer);
             
-            displayDevice.Received(1).Display("X plays first");
+            messageViewer.Received(1).Display("X plays first");
         }
 
         [Test]
         public void Accept_X_First_Answer()
         {
-            var displayDevice = Substitute.For<IDisplayMessages>();
-            var game = new Game(displayDevice);
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var game = new Game(messageViewer);
 
             var status = game.Play(Player.X, 5);
             Check.ThatEnum(status).IsEqualTo(Status.OnGoing);
@@ -28,12 +28,12 @@ namespace TicTacToe.Tests
         [Test]
         public void Display_X_First_Answer()
         {
-            var displayDevice = Substitute.For<IDisplayMessages>();
-            var game = new Game(displayDevice);
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var game = new Game(messageViewer);
 
             game.Play(Player.X, 5);
             
-            displayDevice.Received(1).Display("X played #5");
+            messageViewer.Received(1).Display("X played #5");
         }
     }
 
@@ -55,17 +55,17 @@ namespace TicTacToe.Tests
 
     public class Game
     {
-        public IDisplayMessages DisplayDevice { get; }
+        public IDisplayMessages MessageViewer { get; }
 
-        public Game(IDisplayMessages displayDevice)
+        public Game(IDisplayMessages messageViewer)
         {
-            DisplayDevice = displayDevice;
-            DisplayDevice.Display("X plays first");
+            MessageViewer = messageViewer;
+            MessageViewer.Display("X plays first");
         }
 
         public Status Play(Player player, int cellNumber)
         {
-            DisplayDevice.Display($"{Enum.GetName(player)} played #{cellNumber}");
+            MessageViewer.Display($"{Enum.GetName(player)} played #{cellNumber}");
 
             return Status.OnGoing;
         }
