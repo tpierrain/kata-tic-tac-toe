@@ -24,6 +24,17 @@ namespace TicTacToe.Tests
             var status = game.Play(Player.X, 5);
             Check.ThatEnum(status).IsEqualTo(Status.OnGoing);
         }
+
+        [Test]
+        public void Display_X_First_Answer()
+        {
+            var instructor = Substitute.For<IDisplayInstructions>();
+            var game = new Game(instructor);
+
+            var status = game.Play(Player.X, 5);
+            
+            instructor.Received(1).Display("X played #5");
+        }
     }
 
     public enum Status
