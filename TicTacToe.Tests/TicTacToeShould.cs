@@ -128,16 +128,17 @@ namespace TicTacToe.Tests
         {
             var messageViewer = Substitute.For<IDisplayMessages>();
             var game = new Game(messageViewer).Start();
+            
+            var winnerValues = new Queue<int>(new [] {1, 4, 7 });
+            var looserValues = new Queue<int>(new [] {2, 3, 9 });
 
-            // X will take: 1, 4, 7
-
-            var status = game.Play(1);
-            status = game.Play(2);
-            status = game.Play(4);
-            status = game.Play(3);
+            var status = game.Play(winnerValues.Dequeue());
+            status = game.Play(looserValues.Dequeue());
+            status = game.Play(winnerValues.Dequeue());
+            status = game.Play(looserValues.Dequeue());
             Check.ThatEnum(status).IsNotEqualTo(Status.Won);
 
-            status = game.Play(7);
+            status = game.Play(winnerValues.Dequeue());
             Check.ThatEnum(status).IsEqualTo(Status.Won);
             messageViewer.Received(1).Display("Player X has won the game.");
         }
@@ -148,16 +149,18 @@ namespace TicTacToe.Tests
             var messageViewer = Substitute.For<IDisplayMessages>();
             var game = new Game(messageViewer).Start();
 
-            // 0 will take: 1, 4, 7
+            // O will take: 1, 4, 7
+            var winnerValues = new Queue<int>(new[] { 1, 4, 7 });
+            var looserValues = new Queue<int>(new[] { 2, 3, 9 });
 
-            var status = game.Play(2);
-            status = game.Play(1);
-            status = game.Play(3);
-            status = game.Play(4);
-            status = game.Play(9);
+            var status = game.Play(looserValues.Dequeue());
+            status = game.Play(winnerValues.Dequeue());
+            status = game.Play(looserValues.Dequeue());
+            status = game.Play(winnerValues.Dequeue());
+            status = game.Play(looserValues.Dequeue());
             Check.ThatEnum(status).IsNotEqualTo(Status.Won);
 
-            status = game.Play(7);
+            status = game.Play(winnerValues.Dequeue());
             Check.ThatEnum(status).IsEqualTo(Status.Won);
             messageViewer.Received(1).Display("Player O has won the game.");
         }
