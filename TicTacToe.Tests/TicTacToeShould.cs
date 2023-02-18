@@ -138,7 +138,6 @@ namespace TicTacToe.Tests
             Check.ThatEnum(status).IsNotEqualTo(Status.Won);
 
             status = game.Play(7);
-
             Check.ThatEnum(status).IsEqualTo(Status.Won);
             messageViewer.Received(1).Display("Player X has won the game.");
         }
@@ -159,7 +158,6 @@ namespace TicTacToe.Tests
             Check.ThatEnum(status).IsNotEqualTo(Status.Won);
 
             status = game.Play(7);
-
             Check.ThatEnum(status).IsEqualTo(Status.Won);
             messageViewer.Received(1).Display("Player O has won the game.");
         }

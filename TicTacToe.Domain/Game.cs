@@ -3,15 +3,17 @@ namespace TicTacToe.Domain;
 public class Game
 {
     private bool _started;
+   
+    private readonly Dictionary<Player, HashSet<int>> _alreadyPlayedFields = new();
     
-    private readonly HashSet<int> _alreadyPlayedFieldsByX = new();
-    private readonly HashSet<int> _alreadyPlayedFieldsByO = new();
-
     public IDisplayMessages MessageViewer { get; }
     public Player CurrentPlayer { get; private set; }
     
     public Game(IDisplayMessages messageViewer)
     {
+        _alreadyPlayedFields[Player.X] = new HashSet<int>();
+        _alreadyPlayedFields[Player.O] = new HashSet<int>();
+
         CurrentPlayer = Player.X;
         
         MessageViewer = messageViewer;
@@ -53,21 +55,19 @@ public class Game
 
     private bool HasWon(Player player)
     {
-        if (_alreadyPlayedFieldsByX.Contains(1) 
-            && _alreadyPlayedFieldsByX.Contains(4) &&
-            _alreadyPlayedFieldsByX.Contains(7))
-        {
-            return true;
-        }
-
-        if (_alreadyPlayedFieldsByO.Contains(1)
-            && _alreadyPlayedFieldsByO.Contains(4) &&
-            _alreadyPlayedFieldsByO.Contains(7))
+        if (HasTakenTheFirstColumn(player))
         {
             return true;
         }
 
         return false;
+    }
+
+    private bool HasTakenTheFirstColumn(Player player)
+    {
+        return _alreadyPlayedFields[player].Contains(1) 
+               && _alreadyPlayedFields[player].Contains(4) 
+               && _alreadyPlayedFields[player].Contains(7);
     }
 
     private static bool IsInvalidFieldNumber(int fieldNumber)
@@ -77,21 +77,14 @@ public class Game
 
     private void MarkFieldAsAlreadyPlayed(int fieldNumber, Player player)
     {
-        if (player == Player.X)
-        {
-            _alreadyPlayedFieldsByX.Add(fieldNumber);
-        }
-        else
-        {
-            _alreadyPlayedFieldsByO.Add(fieldNumber);
-        }
+        _alreadyPlayedFields[player].Add(fieldNumber);
 
         MessageViewer.Display($"{Enum.GetName(CurrentPlayer)} played #{fieldNumber}");
     }
 
     private bool IsAlreadyPlayed(int fieldNumber)
     {
-        return _alreadyPlayedFieldsByX.Contains(fieldNumber) || _alreadyPlayedFieldsByO.Contains(fieldNumber);
+        return _alreadyPlayedFields[Player.X].Contains(fieldNumber) || _alreadyPlayedFields[Player.O].Contains(fieldNumber);
     }
 
     private void SwitchPlayer()
