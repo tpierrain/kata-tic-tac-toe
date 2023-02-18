@@ -22,12 +22,13 @@ public class Game
             return Status.NotStarted;
         }
 
-        if(cellNumber is < 1 or > 9)
+        if(IsInvalidFieldNumber(cellNumber))
         {
+            MessageViewer.Display("Invalid field number. Please choose a not already played value from 1 to 9");
             return Status.SamePlayerPlayAgain;
         }
 
-        if (AlreadyPlayed(cellNumber))
+        if (IsAlreadyPlayed(cellNumber))
         {
             MessageViewer.Display($"#{cellNumber} is already played. Try another field.");
             
@@ -41,13 +42,18 @@ public class Game
         return Status.OnGoing;
     }
 
+    private static bool IsInvalidFieldNumber(int cellNumber)
+    {
+        return cellNumber is < 1 or > 9;
+    }
+
     private void MarkFieldAsAlreadyPlayed(int cellNumber, Player player)
     {
         _alreadyPlayedFields[cellNumber] = player;
         MessageViewer.Display($"{Enum.GetName(CurrentPlayer)} played #{cellNumber}");
     }
 
-    private bool AlreadyPlayed(int cellNumber)
+    private bool IsAlreadyPlayed(int cellNumber)
     {
         return _alreadyPlayedFields.ContainsKey(cellNumber);
     }

@@ -108,14 +108,18 @@ namespace TicTacToe.Tests
             var messageViewer = Substitute.For<IDisplayMessages>();
             var game = new Game(messageViewer).Start();
 
-            Check.ThatEnum(game.Play(cellNumber: 0)).IsEqualTo(Status.SamePlayerPlayAgain);
+            var status = game.Play(cellNumber: 0);
+            Check.ThatEnum(status).IsEqualTo(Status.SamePlayerPlayAgain);
+            messageViewer.Received(1).Display("Invalid field number. Please choose a not already played value from 1 to 9");
 
             for (var i = 1; i <= 9; i++)
             {
                 Check.ThatEnum(game.Play(cellNumber: i)).IsNotEqualTo(Status.SamePlayerPlayAgain);
             }
+            messageViewer.Received(1).Display("Invalid field number. Please choose a not already played value from 1 to 9");
 
             Check.ThatEnum(game.Play(cellNumber: 10)).IsEqualTo(Status.SamePlayerPlayAgain);
+            messageViewer.Received(2).Display("Invalid field number. Please choose a not already played value from 1 to 9");
         }
     }
 }
