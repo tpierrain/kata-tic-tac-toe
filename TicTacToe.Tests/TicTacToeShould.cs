@@ -65,6 +65,8 @@ namespace TicTacToe.Tests
 
         public Status Play(Player player, int cellNumber)
         {
+            Instructor.Display($"{Enum.GetName(player)} played #{cellNumber}");
+
             return Status.OnGoing;
         }
     }
