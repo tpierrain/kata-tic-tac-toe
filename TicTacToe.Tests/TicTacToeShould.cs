@@ -17,7 +17,7 @@ namespace TicTacToe.Tests
 
             var status = game.Play(1);
 
-            Check.ThatEnum(status).IsEqualTo(Status.NotStarted);
+            Check.ThatEnum(status).IsEqualTo(GameStatus.NotStarted);
             messageViewer.Received(1).Display("Game not started.");
         }
 
@@ -51,7 +51,7 @@ namespace TicTacToe.Tests
             var game = new Game(messageViewer).Start();
 
             var status = game.Play(5);
-            Check.ThatEnum(status).IsEqualTo(Status.OnGoing);
+            Check.ThatEnum(status).IsEqualTo(GameStatus.OnGoing);
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace TicTacToe.Tests
             game.Play(5);
             var status = game.Play(5);
 
-            Check.ThatEnum(status).IsEqualTo(Status.SamePlayerPlayAgain);
+            Check.ThatEnum(status).IsEqualTo(GameStatus.SamePlayerPlayAgain);
             messageViewer.Received(1).Display("#5 is already played. Try another field.");
         }
 
@@ -110,16 +110,16 @@ namespace TicTacToe.Tests
             var game = new Game(messageViewer).Start();
 
             var status = game.Play(fieldNumber: 0);
-            Check.ThatEnum(status).IsEqualTo(Status.SamePlayerPlayAgain);
+            Check.ThatEnum(status).IsEqualTo(GameStatus.SamePlayerPlayAgain);
             messageViewer.Received(1).Display("Invalid field number. Please choose a not already played value from 1 to 9");
 
             for (var i = 1; i <= 9; i++)
             {
-                Check.ThatEnum(game.Play(fieldNumber: i)).IsNotEqualTo(Status.SamePlayerPlayAgain);
+                Check.ThatEnum(game.Play(fieldNumber: i)).IsNotEqualTo(GameStatus.SamePlayerPlayAgain);
             }
             messageViewer.Received(1).Display("Invalid field number. Please choose a not already played value from 1 to 9");
 
-            Check.ThatEnum(game.Play(fieldNumber: 10)).IsEqualTo(Status.SamePlayerPlayAgain);
+            Check.ThatEnum(game.Play(fieldNumber: 10)).IsEqualTo(GameStatus.SamePlayerPlayAgain);
             messageViewer.Received(2).Display("Invalid field number. Please choose a not already played value from 1 to 9");
         }
 
@@ -138,10 +138,10 @@ namespace TicTacToe.Tests
             status = game.Play(playerOValues.Dequeue());
             status = game.Play(playerXValues.Dequeue());
             status = game.Play(playerOValues.Dequeue());
-            Check.ThatEnum(status).IsNotEqualTo(Status.Won);
+            Check.ThatEnum(status).IsNotEqualTo(GameStatus.Won);
 
             status = game.Play(playerXValues.Dequeue());
-            Check.ThatEnum(status).IsEqualTo(Status.Won);
+            Check.ThatEnum(status).IsEqualTo(GameStatus.Won);
             messageViewer.Received(1).Display($"Player X has won the game.");
         }
 
@@ -161,10 +161,10 @@ namespace TicTacToe.Tests
             status = game.Play(playerXValues.Dequeue());
             status = game.Play(playerOValues.Dequeue());
             status = game.Play(playerXValues.Dequeue());
-            Check.ThatEnum(status).IsNotEqualTo(Status.Won);
+            Check.ThatEnum(status).IsNotEqualTo(GameStatus.Won);
 
             status = game.Play(playerOValues.Dequeue());
-            Check.ThatEnum(status).IsEqualTo(Status.Won);
+            Check.ThatEnum(status).IsEqualTo(GameStatus.Won);
             messageViewer.Received(1).Display("Player O has won the game.");
         }
 
@@ -184,10 +184,10 @@ namespace TicTacToe.Tests
             status = game.Play(playerOValues.Dequeue());
             status = game.Play(playerXValues.Dequeue());
             status = game.Play(playerOValues.Dequeue());
-            Check.ThatEnum(status).IsNotEqualTo(Status.Won);
+            Check.ThatEnum(status).IsNotEqualTo(GameStatus.Won);
 
             status = game.Play(playerXValues.Dequeue());
-            Check.ThatEnum(status).IsEqualTo(Status.Won);
+            Check.ThatEnum(status).IsEqualTo(GameStatus.Won);
             messageViewer.Received(1).Display($"Player X has won the game.");
         }
 
@@ -207,10 +207,10 @@ namespace TicTacToe.Tests
             status = game.Play(playerXValues.Dequeue());
             status = game.Play(playerOValues.Dequeue());
             status = game.Play(playerXValues.Dequeue());
-            Check.ThatEnum(status).IsNotEqualTo(Status.Won);
+            Check.ThatEnum(status).IsNotEqualTo(GameStatus.Won);
 
             status = game.Play(playerOValues.Dequeue());
-            Check.ThatEnum(status).IsEqualTo(Status.Won);
+            Check.ThatEnum(status).IsEqualTo(GameStatus.Won);
             messageViewer.Received(1).Display("Player O has won the game.");
         }
 
@@ -228,10 +228,10 @@ namespace TicTacToe.Tests
             status = game.Play(playerOValues.Dequeue());
             status = game.Play(playerXValues.Dequeue());
             status = game.Play(playerOValues.Dequeue());
-            Check.ThatEnum(status).IsNotEqualTo(Status.Won);
+            Check.ThatEnum(status).IsNotEqualTo(GameStatus.Won);
 
             status = game.Play(playerXValues.Dequeue());
-            Check.ThatEnum(status).IsEqualTo(Status.Won);
+            Check.ThatEnum(status).IsEqualTo(GameStatus.Won);
             messageViewer.Received(1).Display($"Player X has won the game.");
         }
 
@@ -251,10 +251,10 @@ namespace TicTacToe.Tests
             status = game.Play(playerXValues.Dequeue());
             status = game.Play(playerOValues.Dequeue());
             status = game.Play(playerXValues.Dequeue());
-            Check.ThatEnum(status).IsNotEqualTo(Status.Won);
+            Check.ThatEnum(status).IsNotEqualTo(GameStatus.Won);
 
             status = game.Play(playerOValues.Dequeue());
-            Check.ThatEnum(status).IsEqualTo(Status.Won);
+            Check.ThatEnum(status).IsEqualTo(GameStatus.Won);
             messageViewer.Received(1).Display("Player O has won the game.");
         }
 
@@ -275,7 +275,7 @@ namespace TicTacToe.Tests
             status = game.Play(9);
             status = game.Play(2);
 
-            Check.ThatEnum(status).IsEqualTo(Status.Draw);
+            Check.ThatEnum(status).IsEqualTo(GameStatus.Draw);
             messageViewer.Received(1).Display("Game ended on a Draw.");
         }
     }

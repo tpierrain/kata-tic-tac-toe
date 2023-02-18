@@ -13,7 +13,9 @@ public class Game
     
     public IDisplayMessages MessageViewer { get; }
     public Player CurrentPlayer { get; private set; }
-    
+
+    public GameStatus Status { get; private set; }
+
     public Game(IDisplayMessages messageViewer)
     {
         _alreadyPlayedFields[Player.X] = new HashSet<int>();
@@ -24,25 +26,27 @@ public class Game
         MessageViewer = messageViewer;
     }
 
-    public Status Play(int fieldNumber)
+    public GameStatus Play(int fieldNumber)
     {
         if (!_started)
         {
             MessageViewer.Display("Game not started.");
-            return Status.NotStarted;
+            Status = GameStatus.NotStarted;
+            return GameStatus.NotStarted;
         }
 
         if(IsInvalidFieldNumber(fieldNumber))
         {
             MessageViewer.Display("Invalid field number. Please choose a not already played value from 1 to 9");
-            return Status.SamePlayerPlayAgain;
+            Status = GameStatus.SamePlayerPlayAgain;
+            return GameStatus.SamePlayerPlayAgain;
         }
 
         if (IsAlreadyPlayed(fieldNumber))
         {
             MessageViewer.Display($"#{fieldNumber} is already played. Try another field.");
-            
-            return Status.SamePlayerPlayAgain;
+            Status = GameStatus.SamePlayerPlayAgain;
+            return GameStatus.SamePlayerPlayAgain;
         }
 
         MarkFieldAsAlreadyPlayed(fieldNumber, CurrentPlayer);
@@ -50,18 +54,21 @@ public class Game
         if (HasWon(CurrentPlayer))
         {
             MessageViewer.Display($"Player {Enum.GetName(CurrentPlayer)} has won the game.");
-            return Status.Won;
+            Status = GameStatus.Won;
+            return GameStatus.Won;
         }
 
         if (SumOfAlreadyPlayedFields() == MaxNumberOfElements)
         {
             MessageViewer.Display("Game ended on a Draw.");
-            return Status.Draw;
+            Status = GameStatus.Draw;
+            return GameStatus.Draw;
         }
 
         SwitchPlayer();
 
-        return Status.OnGoing;
+        Status = GameStatus.OnGoing;
+        return GameStatus.OnGoing;
     }
 
     private int SumOfAlreadyPlayedFields()

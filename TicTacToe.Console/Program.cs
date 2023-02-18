@@ -5,9 +5,9 @@ using TicTacToe.Domain;
 
 var game = new Game(new ConsoleMessageViewer()).Start();
 
-var status = Status.OnGoing;
+var status = GameStatus.OnGoing;
 
-while (status != Status.Won && status != Status.Draw) 
+while (status != GameStatus.Won && status != GameStatus.Draw) 
 {
     var input = Console.ReadLine();
 
