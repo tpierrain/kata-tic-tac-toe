@@ -270,5 +270,20 @@ namespace TicTacToe.Tests
             Check.ThatEnum(game.Status).IsEqualTo(GameStatus.Draw);
             messageViewer.Received(1).Display("Game ended on a Draw.");
         }
+
+        [Test]
+        public void Expose_the_Board_of_the_Game()
+        {
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var game = new Game(messageViewer).Start();
+
+            Check.That(game.Board).ContainsExactly("1", "2", "3", "4", "5", "6", "7", "8", "9");
+
+            game = game.Play(5);
+            Check.That(game.Board).ContainsExactly( "1","2", "3", "4", "X", "6", "7", "8", "9");
+
+            game = game.Play(1);
+            Check.That(game.Board).ContainsExactly("O", "2", "3", "4", "X", "6", "7", "8", "9");
+        }
     }
 }

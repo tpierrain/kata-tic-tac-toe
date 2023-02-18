@@ -15,6 +15,7 @@ public class Game
     public Player CurrentPlayer { get; private set; }
 
     public GameStatus Status { get; private set; }
+    public string[] Board => new[] { "1", "2" };
 
     public Game(IDisplayMessages messageViewer)
     {
