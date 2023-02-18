@@ -266,16 +266,8 @@ namespace TicTacToe.Tests
             var messageViewer = Substitute.For<IDisplayMessages>();
             var game = new Game(messageViewer).Start();
 
-            game = game.Play(5);
-            game = game.Play(8);
-            game = game.Play(7);
-            game = game.Play(3);
-            game = game.Play(1);
-            game = game.Play(4);
-            game = game.Play(6);
-            game = game.Play(1);
-            game = game.Play(9);
-            game = game.Play(2);
+            game = new [] { 5, 8, 7, 3, 1, 4, 6, 1, 9, 2}
+                            .Aggregate(game, (current, move) => current.Play(move));
 
             Check.ThatEnum(game.Status).IsEqualTo(GameStatus.Draw);
             messageViewer.Received(1).Display("Game ended on a Draw.");
