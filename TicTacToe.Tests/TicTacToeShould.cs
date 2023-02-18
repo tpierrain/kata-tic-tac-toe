@@ -1,5 +1,6 @@
 using NFluent;
 using NSubstitute;
+using System.Numerics;
 using TicTacToe.Domain;
 
 namespace TicTacToe.Tests
@@ -59,6 +60,20 @@ namespace TicTacToe.Tests
             messageViewer.Received(1).Display("X played #5");
 
             game.Play(6);
-            messageViewer.Received(1).Display("O played #6"); }
+            messageViewer.Received(1).Display("O played #6");
+        }
+
+        [Test]
+        public void Tell_the_player_to_try_another_field_if_the_chosen_one_is_already_played()
+        {
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var game = new Game(messageViewer);
+
+            game.Play(5);
+            var status = game.Play(5);
+
+            Check.ThatEnum(status).IsEqualTo(Status.SamePlayerPlayAgain);
+            messageViewer.Received(1).Display("#5 is already played. Try another field.");
+        }
     }
 }
