@@ -21,6 +21,20 @@ namespace TicTacToe.Tests
         }
 
         [Test]
+        public void Display_a_welcome_message_when_starting()
+        {
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var game = new Game(messageViewer);
+
+            messageViewer.Received(0).Display(Arg.Any<string>());
+
+            game.Start();
+
+            messageViewer.Received(1).Display("New Tic tac toe game started.");
+            messageViewer.Received(1).Display("Next player: X");
+        }
+
+        [Test]
         public void Ask_X_to_start()
         {
             var messageViewer = Substitute.For<IDisplayMessages>();

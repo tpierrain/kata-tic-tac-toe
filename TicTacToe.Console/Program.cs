@@ -3,7 +3,7 @@
 using TicTacToe.Console;
 using TicTacToe.Domain;
 
-var game = new Game(new ConsoleMessageViewer());
+var game = new Game(new ConsoleMessageViewer()).Start();
 
 var input = Console.ReadLine();
 
