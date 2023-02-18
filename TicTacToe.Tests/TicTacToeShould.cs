@@ -145,24 +145,25 @@ namespace TicTacToe.Tests
             messageViewer.Received(1).Display($"Player X has won the game.");
         }
 
-        [Test]
-        public void End_a_game_when_all_fields_in_the_first_column_are_taken_by_player_0()
+        [TestCase(new int[] { 1, 4, 7 }, new int[] { 2, 3, 9 })]
+        [TestCase(new int[] { 2, 5, 8 }, new int[] { 1, 4, 9 })]
+        [TestCase(new int[] { 3, 6, 9 }, new int[] { 1, 4, 8 })]
+        public void Have_Player_O_won_when_is_taking_all_fields_in_a_column(int[] winner, int[] looser)
         {
             var messageViewer = Substitute.For<IDisplayMessages>();
             var game = new Game(messageViewer).Start();
 
-            // O will take: 1, 4, 7
-            var winnerValues = new Queue<int>(new[] { 1, 4, 7 });
-            var looserValues = new Queue<int>(new[] { 2, 3, 9 });
+            var playerXValues = new Queue<int>(looser);
+            var playerOValues = new Queue<int>(winner);
 
-            var status = game.Play(looserValues.Dequeue());
-            status = game.Play(winnerValues.Dequeue());
-            status = game.Play(looserValues.Dequeue());
-            status = game.Play(winnerValues.Dequeue());
-            status = game.Play(looserValues.Dequeue());
+            var status = game.Play(playerXValues.Dequeue());
+            status = game.Play(playerOValues.Dequeue());
+            status = game.Play(playerXValues.Dequeue());
+            status = game.Play(playerOValues.Dequeue());
+            status = game.Play(playerXValues.Dequeue());
             Check.ThatEnum(status).IsNotEqualTo(Status.Won);
 
-            status = game.Play(winnerValues.Dequeue());
+            status = game.Play(playerOValues.Dequeue());
             Check.ThatEnum(status).IsEqualTo(Status.Won);
             messageViewer.Received(1).Display("Player O has won the game.");
         }
