@@ -36,5 +36,17 @@ namespace TicTacToe.Tests
             
             messageViewer.Received(1).Display("X played #5");
         }
+
+        [Test]
+        public void Ask_O_to_play_after_X()
+        {
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var game = new Game(messageViewer);
+
+            messageViewer.Received(0).Display("Next player: 0");
+
+            game.Play(5);
+            messageViewer.Received(1).Display("Next player: 0");
+        }
     }
 }
