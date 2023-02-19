@@ -338,5 +338,24 @@ namespace TicTacToe.Tests
             boardPublisher.Received(1).Publish(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
         }
 
+        [Test]
+        public void Publish_the_board_after_a_win()
+        {
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var boardPublisher = Substitute.For<IPublishBoards>();
+            var game = new Game(messageViewer, boardPublisher)
+                .Start();
+
+            game = game.Play(7);
+            game = game.Play(1);
+            game = game.Play(5);
+            game = game.Play(4);
+            game = game.Play(3);
+
+            Check.ThatEnum(game.Status).IsEqualTo(GameStatus.Won);
+
+            boardPublisher.Received(1).Publish("O", "2", "X", "O", "X", "6", "X", "8", "9");
+        }
+
     }
 }
