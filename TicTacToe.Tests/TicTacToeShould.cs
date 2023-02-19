@@ -305,5 +305,7 @@ namespace TicTacToe.Tests
             boardPublisher.Received(1).Publish("O", "2", "3", "4", "X", "6", "7", "8", "9");
         }
 
+        // an error should not trigger a new board change nor publication
+
     }
 }

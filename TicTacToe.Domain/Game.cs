@@ -90,9 +90,17 @@ public class Game
         }
 
         SwitchPlayer();
+        PublishBoard();
+        MessageViewer.Display($"Next player: {Enum.GetName(CurrentPlayer)}");
 
         Status = GameStatus.OnGoing;
         return this;
+    }
+
+    private void PublishBoard()
+    {
+        var fields = this.Board.ToArray();
+        _boardPublisher.Publish(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8]);
     }
 
     private int SumOfAlreadyPlayedFields()
@@ -193,13 +201,13 @@ public class Game
     private void SwitchPlayer()
     {
         CurrentPlayer = CurrentPlayer == Player.O ? Player.X : Player.O;
-        MessageViewer.Display($"Next player: {Enum.GetName(CurrentPlayer)}");
     }
 
     public Game Start()
     {
         _started = true;
         MessageViewer.Display("New Tic tac toe game started.");
+        PublishBoard();
         MessageViewer.Display($"Next player: {Enum.GetName(CurrentPlayer)}");
 
         return this;
