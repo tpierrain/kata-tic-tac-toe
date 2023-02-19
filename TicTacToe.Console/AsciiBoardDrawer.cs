@@ -16,9 +16,31 @@ public class AsciiBoardDrawer
     public void Draw(string field1, string field2, string field3, string field4, string field5, string field6,
         string field7, string field8, string field9)
     {
-        _console.WriteLine($"");
-        _console.WriteLine($"+---+---+---+");
+        WriteNewLine();
+        
+        WriteSeparatorLine();
+        WriteLineWithFields(field1, field2, field3);
+        WriteSeparatorLine();
+        WriteLineWithFields(field4, field5, field6);
+        WriteSeparatorLine();
+        WriteLineWithFields(field7, field8, field9);
+        WriteSeparatorLine();
 
+        WriteNewLine();
+    }
+
+    private void WriteNewLine()
+    {
+        _console.WriteLine(string.Empty);
+    }
+
+    private void WriteSeparatorLine()
+    {
+        _console.WriteLine($"+---+---+---+");
+    }
+
+    private void WriteLineWithFields(string field1, string field2, string field3)
+    {
         _console.Write($"+-");
         _console.Write(field1);
         _console.Write("-+-");
@@ -27,32 +49,8 @@ public class AsciiBoardDrawer
         _console.Write(field3);
         _console.Write("-+.");
         _console.Write(Environment.NewLine);
-        
-        _console.WriteLine($"+---+---+---+");
-
-        _console.Write($"+-");
-        _console.Write(field4);
-        _console.Write("-+-");
-        _console.Write(field5);
-        _console.Write("-+-");
-        _console.Write(field6);
-        _console.Write("-+.");
-        _console.Write(Environment.NewLine);
-        
-        _console.WriteLine($"+---+---+---+");
-
-        _console.Write($"+-");
-        _console.Write(field7);
-        _console.Write("-+-");
-        _console.Write(field8);
-        _console.Write("-+-");
-        _console.Write(field9);
-        _console.Write("-+.");
-        _console.Write(Environment.NewLine);
-
-        _console.WriteLine($"+---+---+---+");
-        _console.WriteLine($"");
     }
+
     public void Draw(string[] board)
     {
         Draw(board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]);
