@@ -18,11 +18,38 @@ public class AsciiBoardDrawer
     {
         _console.WriteLine($"");
         _console.WriteLine($"+---+---+---+");
-        _console.WriteLine($"+-{field1}-+-{field2}-+-{field3}-+");
+
+        _console.Write($"+-");
+        _console.Write(field1);
+        _console.Write("-+-");
+        _console.Write(field2);
+        _console.Write("-+-");
+        _console.Write(field3);
+        _console.Write("-+.");
+        _console.Write(Environment.NewLine);
+        
         _console.WriteLine($"+---+---+---+");
-        _console.WriteLine($"+-{field4}-+-{field5}-+-{field6}-+");
+
+        _console.Write($"+-");
+        _console.Write(field4);
+        _console.Write("-+-");
+        _console.Write(field5);
+        _console.Write("-+-");
+        _console.Write(field6);
+        _console.Write("-+.");
+        _console.Write(Environment.NewLine);
+        
         _console.WriteLine($"+---+---+---+");
-        _console.WriteLine($"+-{field7}-+-{field8}-+-{field9}-+");
+
+        _console.Write($"+-");
+        _console.Write(field7);
+        _console.Write("-+-");
+        _console.Write(field8);
+        _console.Write("-+-");
+        _console.Write(field9);
+        _console.Write("-+.");
+        _console.Write(Environment.NewLine);
+
         _console.WriteLine($"+---+---+---+");
         _console.WriteLine($"");
     }
