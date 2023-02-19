@@ -285,5 +285,25 @@ namespace TicTacToe.Tests
             game = game.Play(1);
             Check.That(game.Board).ContainsExactly("O", "2", "3", "4", "X", "6", "7", "8", "9");
         }
+
+        [Test]
+        public void Publish_Every_new_Board_Configuration()
+        {
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var boardPublisher = Substitute.For<IPublishBoards>();
+            var game = new Game(messageViewer, boardPublisher).Start();
+
+            Check.That(game.Board).ContainsExactly("1", "2", "3", "4", "5", "6", "7", "8", "9");
+            boardPublisher.Received(1).Publish("1", "2", "3", "4", "5", "6", "7", "8", "9");
+
+            game = game.Play(5);
+            Check.That(game.Board).ContainsExactly("1", "2", "3", "4", "X", "6", "7", "8", "9");
+            boardPublisher.Received(1).Publish("1", "2", "3", "4", "X", "6", "7", "8", "9");
+
+            game = game.Play(1);
+            Check.That(game.Board).ContainsExactly("O", "2", "3", "4", "X", "6", "7", "8", "9");
+            boardPublisher.Received(1).Publish("O", "2", "3", "4", "X", "6", "7", "8", "9");
+        }
+
     }
 }

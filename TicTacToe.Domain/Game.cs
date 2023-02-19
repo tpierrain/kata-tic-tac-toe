@@ -2,6 +2,7 @@ namespace TicTacToe.Domain;
 
 public class Game
 {
+    private readonly IPublishBoards _boardPublisher;
     private const int NumberOfRows = 3;
     private const int NumberOfColumns = 3;
 
@@ -33,8 +34,13 @@ public class Game
         }).ToArray();
     }
 
-    public Game(IDisplayMessages messageViewer)
+    public Game(IDisplayMessages messageViewer) : this(messageViewer, new NullBoardPublisher())
     {
+    }
+
+    public Game(IDisplayMessages messageViewer, IPublishBoards boardPublisher = null)
+    {
+        _boardPublisher = boardPublisher;
         Status = GameStatus.OnGoing;
         _alreadyPlayedFields[Player.X] = new HashSet<int>();
         _alreadyPlayedFields[Player.O] = new HashSet<int>();
