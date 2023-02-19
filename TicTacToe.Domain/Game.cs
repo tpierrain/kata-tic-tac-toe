@@ -77,6 +77,7 @@ public class Game
 
         if (HasWon(CurrentPlayer))
         {
+            PublishBoard();
             MessageViewer.Display($"Player {Enum.GetName(CurrentPlayer)} has won the game.");
             Status = GameStatus.Won;
             return this;
