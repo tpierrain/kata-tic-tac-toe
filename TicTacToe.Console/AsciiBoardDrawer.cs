@@ -2,6 +2,10 @@
 
 public class AsciiBoardDrawer
 {
+    private const ConsoleColor ForegroundColorForFrame = ConsoleColor.DarkGray;
+    private const ConsoleColor ForegroundColorForX = ConsoleColor.Yellow;
+    private const ConsoleColor ForegroundColorForO = ConsoleColor.Red;
+
     private readonly IWriteThings _console;
 
     public AsciiBoardDrawer() : this(new ConsoleWriter())
@@ -16,6 +20,8 @@ public class AsciiBoardDrawer
     public void Draw(string field1, string field2, string field3, string field4, string field5, string field6,
         string field7, string field8, string field9)
     {
+        var previousForegroundColor = Console.ForegroundColor;
+
         WriteNewLine();
         
         WriteSeparatorLine();
@@ -27,6 +33,8 @@ public class AsciiBoardDrawer
         WriteSeparatorLine();
 
         WriteNewLine();
+
+        Console.ForegroundColor = previousForegroundColor;
     }
 
     private void WriteNewLine()
@@ -36,19 +44,48 @@ public class AsciiBoardDrawer
 
     private void WriteSeparatorLine()
     {
+        Console.ForegroundColor = ForegroundColorForFrame;
         _console.WriteLine($"+---+---+---+");
     }
 
-    private void WriteLineWithFields(string field1, string field2, string field3)
+    private void WriteLineWithFields(string fieldA, string fieldB, string fieldC)
     {
-        _console.Write($"+-");
-        _console.Write(field1);
-        _console.Write("-+-");
-        _console.Write(field2);
-        _console.Write("-+-");
-        _console.Write(field3);
-        _console.Write("-+.");
+        Console.ForegroundColor = ForegroundColorForFrame;
+
+        WriteInTheProperFrameColor($"+-");
+        WriteFieldInTheProperColor(fieldA);
+        WriteInTheProperFrameColor("-+-");
+        WriteFieldInTheProperColor(fieldB);
+        WriteInTheProperFrameColor("-+-");
+        WriteFieldInTheProperColor(fieldC);
+        WriteInTheProperFrameColor("-+.");
+
         _console.Write(Environment.NewLine);
+    }
+
+    private void WriteInTheProperFrameColor(string message)
+    {
+        Console.ForegroundColor = ForegroundColorForFrame;
+        _console.Write(message);
+    }
+
+    private void WriteFieldInTheProperColor(string field)
+    {
+        if (field == "X")
+        {
+            Console.ForegroundColor = ForegroundColorForX;
+        }
+        else if (field == "O")
+        {
+            Console.ForegroundColor = ForegroundColorForO;
+        }
+        else
+        {
+            Console.ForegroundColor = ForegroundColorForFrame;
+
+        }
+
+        _console.Write(field);
     }
 
     public void Draw(string[] board)
