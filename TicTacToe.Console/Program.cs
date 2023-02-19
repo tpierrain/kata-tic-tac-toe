@@ -3,10 +3,9 @@
 using TicTacToe.Console;
 using TicTacToe.Domain;
 
-var game = new Game(new ConsoleMessageViewer()).Start();
 var boardDrawer = new AsciiBoardDrawer();
-
-boardDrawer.Draw(game.Board);
+var game = new Game(new ConsoleMessageViewer(), new ConsoleBoardPublisher(boardDrawer))
+    .Start();
 
 while (game.Status != GameStatus.Won && game.Status != GameStatus.Draw) 
 {
@@ -15,17 +14,7 @@ while (game.Status != GameStatus.Won && game.Status != GameStatus.Draw)
     var tryParse = int.TryParse(input, out int fieldNumber);
 
     game = game.Play(fieldNumber);
-
-    boardDrawer.Draw(game.Board);
 }
 
 
 Console.WriteLine("ciao !");
-
-public class ConsoleWriter : IWriteThings
-{
-    public void WriteLine(string message)
-    {
-        Console.WriteLine(message);
-    }
-}
