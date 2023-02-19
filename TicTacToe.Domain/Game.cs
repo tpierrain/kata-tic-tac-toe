@@ -61,6 +61,8 @@ public class Game
 
         if(IsInvalidFieldNumber(fieldNumber))
         {
+            PublishBoard();
+
             MessageViewer.Display("Invalid field number. Please choose a not already played value from 1 to 9");
             Status = GameStatus.SamePlayerPlayAgain;
             return this;
@@ -68,6 +70,8 @@ public class Game
 
         if (IsAlreadyPlayed(fieldNumber))
         {
+            PublishBoard();
+
             MessageViewer.Display($"#{fieldNumber} is already played. Try another field.");
             Status = GameStatus.SamePlayerPlayAgain;
             return this;

@@ -305,7 +305,37 @@ namespace TicTacToe.Tests
             boardPublisher.Received(1).Publish("O", "2", "3", "4", "X", "6", "7", "8", "9");
         }
 
-        // an error should not trigger a new board change nor publication
+        [Test]
+        public void Not_publish_the_board_after_an_alreadyplayed_error()
+        {
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var boardPublisher = Substitute.For<IPublishBoards>();
+            var game = new Game(messageViewer, boardPublisher).Start();
 
+            Check.That(game.Board).ContainsExactly("1", "2", "3", "4", "5", "6", "7", "8", "9");
+            boardPublisher.Received(1).Publish("1", "2", "3", "4", "5", "6", "7", "8", "9");
+
+            game = game.Play(5);
+            Check.That(game.Board).ContainsExactly("1", "2", "3", "4", "X", "6", "7", "8", "9");
+            boardPublisher.Received(1).Publish("1", "2", "3", "4", "X", "6", "7", "8", "9");
+
+            game = game.Play(5);
+            boardPublisher.Received(1).Publish("1", "2", "3", "4", "X", "6", "7", "8", "9");
+        }
+
+        [Test]
+        public void Not_publish_the_board_after_an_out_of_range_error()
+        {
+            var messageViewer = Substitute.For<IDisplayMessages>();
+            var boardPublisher = Substitute.For<IPublishBoards>();
+            var game = new Game(messageViewer, boardPublisher).Start();
+
+            Check.That(game.Board).ContainsExactly("1", "2", "3", "4", "5", "6", "7", "8", "9");
+            boardPublisher.Received(1).Publish("1", "2", "3", "4", "5", "6", "7", "8", "9");
+
+            var outOfRangeFieldNumber = 0;
+            game = game.Play(outOfRangeFieldNumber);
+            boardPublisher.Received(1).Publish(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
+        }
     }
 }
