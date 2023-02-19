@@ -337,5 +337,6 @@ namespace TicTacToe.Tests
             game = game.Play(outOfRangeFieldNumber);
             boardPublisher.Received(1).Publish(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
         }
+
     }
 }
