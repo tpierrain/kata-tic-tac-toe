@@ -70,8 +70,6 @@ public class Game
 
         if (IsAlreadyPlayed(fieldNumber))
         {
-            PublishBoard();
-
             MessageViewer.Display($"#{fieldNumber} is already played. Try another field.");
             Status = GameStatus.SamePlayerPlayAgain;
             return this;
